@@ -2,11 +2,21 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({ origin: ["http://localhost:3000/"] }));
+app.use(session({
+    resave: false,
+    saveUninitialized: false,
+    secret: process.env.SESSION_SECRET,
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGODB_URI,
+    })
+}));
 app.use(express.static('public'));
 
 (async function main() {
