@@ -3,12 +3,13 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const session = require('express-session');
-const MongoStore = require('connect-mongo')
+const MongoStore = require('connect-mongo');
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({ origin: ["http://localhost:3000/"] }));
+app.use(express.json());
 app.use(session({
     resave: false,
     saveUninitialized: false,
@@ -18,6 +19,7 @@ app.use(session({
     })
 }));
 app.use(express.static('public'));
+app.use('/api/auth', require('./routes/authRoute'));
 
 (async function main() {
     try{
