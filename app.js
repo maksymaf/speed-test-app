@@ -20,6 +20,7 @@ app.use(session({
 }));
 app.use(express.static('public'));
 app.use('/api/auth', require('./routes/authRoute'));
+app.use('/api/text', require('./routes/textRoute'));
 
 (async function main() {
     try{
